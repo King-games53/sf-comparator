@@ -37,15 +37,22 @@ class Reader
      */
     public function read(Merchant $merchant)
     {
-        // $count = 0;
-
-        // Lire le flux de données du marchand
+        // Lire le content d'un fichier distant
+        $content = file_get_contents($merchant->getFeedUrl());
 
         // Convertir les données JSON en tableau
+        $array = json_decode($content, true);
 
         // Pour chaque couple de données "code ean / prix"
+        foreach ($array as $data){
+            $eanCode = $data['ean_code'];
+        }
 
             // Trouver le produit correspondant
+
+        $product = $this->em
+            ->getRepository('AppBundle:Product')
+            ->findOneBy(['eanCode' => $eanCode]);
 
                 // Sinon passer à l'itération suivante
 
